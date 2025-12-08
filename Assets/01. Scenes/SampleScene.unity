@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 35374697}
   - component: {fileID: 35374698}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: SP Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 208129378}
   - component: {fileID: 208129377}
   m_Layer: 5
-  m_Name: Image
+  m_Name: HP Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 235995653}
   - component: {fileID: 235995654}
   m_Layer: 5
-  m_Name: Slider (1)
+  m_Name: HP Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -932,7 +932,7 @@ GameObject:
   - component: {fileID: 507306365}
   - component: {fileID: 507306364}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Character Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1380,7 +1380,7 @@ GameObject:
   - component: {fileID: 1405413014}
   - component: {fileID: 1405413013}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: SP Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1662,7 +1662,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 3
+  _runSpeed: 3
   _jumpPower: 5
+  _runStaminaUse: 4
+  _secondJumpStaminaUse: 10
   Gravity: -9.81
 --- !u!143 &1708018806
 CharacterController:
@@ -1689,6 +1692,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.925, z: 0}
+--- !u!114 &1708018807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708018801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77de4ac425feca4a912577f85a8a174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealthPoint: 100
+  _maxStaminaPoint: 100
+  _regenerateStaminaPoint: 1
 --- !u!1 &1800217765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,8 +1718,9 @@ GameObject:
   - component: {fileID: 1800217766}
   - component: {fileID: 1800217768}
   - component: {fileID: 1800217767}
+  - component: {fileID: 1800217769}
   m_Layer: 5
-  m_Name: Image
+  m_Name: StatsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1720,10 +1739,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 507306363}
-  - {fileID: 235995653}
-  - {fileID: 35374697}
   - {fileID: 208129376}
+  - {fileID: 235995653}
   - {fileID: 1405413012}
+  - {fileID: 35374697}
   m_Father: {fileID: 733411906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.0125, y: 0.025}
@@ -1769,6 +1788,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800217765}
   m_CullTransparentMesh: 1
+--- !u!114 &1800217769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800217765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac984bf9f2afe1f4eba9443e31899a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpSlider: {fileID: 235995654}
+  _spSlider: {fileID: 35374698}
 --- !u!1001 &1862344064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1832,6 +1865,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 152045411}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1280676089565844, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1708018807}
     - targetCorrespondingSourceObject: {fileID: 1280676089565844, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1708018804}
