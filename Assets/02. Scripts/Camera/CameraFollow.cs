@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -49,29 +48,23 @@ public class CameraFollow : MonoBehaviour
 
     private void SelectCameraView()
     {
-        if(Input.GetKey(KeyCode.T) && !_isMoving)
+        if (Input.GetKeyDown(KeyCode.T) && !_isMoving)
         {
             IsFPS = !IsFPS;
-            Vector3 changeTarget = IsFPS ? _tpsView.position : _fpsView.position;
-            StartCoroutine(StartCameraMoving());
+
+            _isMoving = true;
+
+            _startPos = transform.position;
+
+            DOVirtual.Float(0f, 1f, _duration, UpdateTweenByParam)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+                _isMoving = false;
+            });
         }
     }
 
-    private IEnumerator StartCameraMoving()
-    {
-        _isMoving = true;
-
-        _startPos = transform.position;
-
-        DOVirtual.Float(0f, 1f, _duration, UpdateTweenByParam)
-        .SetEase(Ease.OutQuad)
-        .OnComplete(() =>
-        {
-            _isMoving = false;
-        });
-
-        yield return null;
-    }
     private void UpdateTweenByParam(float t)
     {
         transform.position = Vector3.Lerp(_startPos, _target.position, t);
