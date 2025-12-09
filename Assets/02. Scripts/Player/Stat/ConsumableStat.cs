@@ -8,27 +8,38 @@ public class ConsumableStat
     [SerializeField] private float _value;
     [SerializeField] private float _regenValue;
 
-    public float Value => _value;
+    public float Value
+    {
+        get { return _value; }
+        private set
+        {
+            _value = value;
+            OnValueChanged?.Invoke(_value, _maxValue);
+        }
+    }
+
     public float MaxValue => _maxValue;
+
+    public event Action<float, float> OnValueChanged;
 
     public void Initialize()
     {
-        SetValue(_maxValue);
+        SetValue(MaxValue);
     }
 
     public void Regenerate(float time)
     {
-        _value += _regenValue * time;
+        Value += _regenValue * time;
 
-        if (_value > _maxValue)
+        if (Value > _maxValue)
         {
-            _value = _maxValue;
+            Value = _maxValue;
         }
     }
 
     public bool TryConsume(float amount)
     {
-        if (_value < amount) return false;
+        if (Value < amount) return false;
 
         Consume(amount);
 
@@ -37,7 +48,7 @@ public class ConsumableStat
 
     public void Consume(float amount)
     {
-        _value -= amount;
+        Value -= amount;
     }
 
     public void IncreaseMax(float amount)
@@ -47,7 +58,7 @@ public class ConsumableStat
 
     public void Increase(float amount)
     {
-        SetValue(_value + amount);
+        SetValue(Value + amount);
     }
 
     public void DecreaseMax(float amount)
@@ -56,7 +67,7 @@ public class ConsumableStat
     }
     public void Decrease(float amount)
     {
-        _value -= amount;
+        Value -= amount;
     }
 
     public void SetMaxValue(float value)
@@ -65,11 +76,11 @@ public class ConsumableStat
     }
     public void SetValue(float value)
     {
-        _value = value;
+        Value = value;
 
-        if (_value > _maxValue)
+        if (Value > _maxValue)
         {
-            _value = _maxValue;
+            Value = _maxValue;
         }
     }
 }
