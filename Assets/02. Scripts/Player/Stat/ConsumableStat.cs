@@ -13,6 +13,7 @@ public class ConsumableStat
         get { return _value; }
         private set
         {
+            if (Mathf.Approximately(_value, value)) return;
             _value = value;
             OnValueChanged?.Invoke(_value, _maxValue);
         }
@@ -29,12 +30,7 @@ public class ConsumableStat
 
     public void Regenerate(float time)
     {
-        Value += _regenValue * time;
-
-        if (Value > _maxValue)
-        {
-            Value = _maxValue;
-        }
+        Value = Mathf.Clamp(_value + _regenValue * time, 0f, _maxValue);
     }
 
     public bool TryConsume(float amount)
@@ -76,11 +72,6 @@ public class ConsumableStat
     }
     public void SetValue(float value)
     {
-        Value = value;
-
-        if (Value > _maxValue)
-        {
-            Value = _maxValue;
-        }
+        Value = Mathf.Clamp(value, 0f, _maxValue);
     }
 }

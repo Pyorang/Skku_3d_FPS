@@ -24,13 +24,13 @@ public class UI_PlayerStats : MonoBehaviour
         _playerStat.Stamina.OnValueChanged -= UpdateSpStatSlider;
     }
 
-    public void UpdateHpStatSlider(float value, float maxValue)
+    private void UpdateHpStatSlider(float value, float maxValue)
     {
-        _hpSlider.value = _playerStat.Health.Value / _playerStat.Health.MaxValue;
+        _hpSlider.value = value / maxValue;
     }
 
-    public void UpdateSpStatSlider(float value, float maxValue)
+    private void UpdateSpStatSlider(float value, float maxValue)
     {
-        _spSlider.value = _playerStat.Stamina.Value / _playerStat.Stamina.MaxValue;
+        _spSlider.value = value / maxValue;
     }
 }
