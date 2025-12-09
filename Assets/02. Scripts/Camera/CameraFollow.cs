@@ -1,11 +1,72 @@
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform Target;
+    [Header("카메라 뷰")]
+    [Space]
+    [SerializeField] private Transform _fpsView;
+    [SerializeField] private Transform _tpsView;
+    private Transform _target;
+
+    [Header("카메라 이동 설정")]
+    [Space]
+    [SerializeField] private float _duration = 1.0f;
+    private Vector3 _startPos;
+
+    private bool _isFPS = false;
+    public bool IsFPS
+    {
+        get {  return _isFPS; }
+        private set
+        {
+            _isFPS = value;
+            _target = _isFPS ? _fpsView : _tpsView;
+        }
+    }
+
+    private bool _isMoving = false;
+
+    private void Awake()
+    {
+        IsFPS = true;
+    }
+
+    private void Update()
+    {
+        SelectCameraView();
+    }
 
     private void LateUpdate()
     {
-        transform.position = Target.position;
+        if(!_isMoving)
+        {
+            transform.position = _target.position;
+        }
+    }
+
+    private void SelectCameraView()
+    {
+        if (Input.GetKeyDown(KeyCode.T) && !_isMoving)
+        {
+            IsFPS = !IsFPS;
+
+            _isMoving = true;
+
+            _startPos = transform.position;
+
+            DOVirtual.Float(0f, 1f, _duration, UpdateTweenByParam)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+                _isMoving = false;
+            });
+        }
+    }
+
+    private void UpdateTweenByParam(float t)
+    {
+        transform.position = Vector3.Lerp(_startPos, _target.position, t);
     }
 }
