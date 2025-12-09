@@ -1657,10 +1657,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1717,7 +1717,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1708018803}
     m_Modifications:
     - target: {fileID: 1280676089565844, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_Name
@@ -1745,15 +1745,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1837,9 +1837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34dcba5ac9087443a11881d0109f778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
-  _runSpeed: 3
-  _jumpPower: 5
   _runStaminaUse: 4
   _secondJumpStaminaUse: 10
   Gravity: -9.81
@@ -1855,9 +1852,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77de4ac425feca4a912577f85a8a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealthPoint: 100
-  _maxStaminaPoint: 100
-  _regenerateStaminaPoint: 1
+  Health:
+    _maxValue: 0
+    _value: 0
+    _regenValue: 0
+  Stamina:
+    _maxValue: 0
+    _value: 0
+    _regenValue: 0
+  Damage:
+    _value: 0
+  MoveSpeed:
+    _value: 0
+  RunSpeed:
+    _value: 0
+  JumpPower:
+    _value: 0
 --- !u!1 &816113686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,6 +2054,142 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1708018803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1007392960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1007392965}
+  - component: {fileID: 1007392964}
+  - component: {fileID: 1007392963}
+  - component: {fileID: 1007392962}
+  - component: {fileID: 1007392961}
+  m_Layer: 0
+  m_Name: Bomb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!54 &1007392961
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007392960}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1007392962
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007392960}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1007392963
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007392960}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b95276f3e4d76be42acace57f47c191f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1007392964
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007392960}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1007392965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007392960}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.59482116, y: 0.39, z: 5.237}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067939130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,7 +2304,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1708018803}
     m_Modifications:
     - target: {fileID: 1280676089565844, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_Name
@@ -2186,15 +2332,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2278,9 +2424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34dcba5ac9087443a11881d0109f778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
-  _runSpeed: 3
-  _jumpPower: 5
   _runStaminaUse: 4
   _secondJumpStaminaUse: 10
   Gravity: -9.81
@@ -2296,9 +2439,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77de4ac425feca4a912577f85a8a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealthPoint: 100
-  _maxStaminaPoint: 100
-  _regenerateStaminaPoint: 1
+  Health:
+    _maxValue: 0
+    _value: 0
+    _regenValue: 0
+  Stamina:
+    _maxValue: 0
+    _value: 0
+    _regenValue: 0
+  Damage:
+    _value: 0
+  MoveSpeed:
+    _value: 0
+  RunSpeed:
+    _value: 0
+  JumpPower:
+    _value: 0
 --- !u!1 &1142980223
 GameObject:
   m_ObjectHideFlags: 0
@@ -3238,11 +3394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34dcba5ac9087443a11881d0109f778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
-  _runSpeed: 3
-  _jumpPower: 5
-  _runStaminaUse: 4
-  _secondJumpStaminaUse: 10
+  _runStaminaUse: 50
+  _secondJumpStaminaUse: 20
   Gravity: -9.81
 --- !u!143 &1708018806
 CharacterController:
@@ -3281,9 +3434,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77de4ac425feca4a912577f85a8a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealthPoint: 100
-  _maxStaminaPoint: 100
-  _regenerateStaminaPoint: 1
+  Health:
+    _maxValue: 100
+    _value: 100
+    _regenValue: 10
+  Stamina:
+    _maxValue: 100
+    _value: 100
+    _regenValue: 10
+  Damage:
+    _value: 50
+  MoveSpeed:
+    _value: 10
+  RunSpeed:
+    _value: 1.2
+  JumpPower:
+    _value: 3
 --- !u!1 &1726344351
 GameObject:
   m_ObjectHideFlags: 0
@@ -3485,6 +3651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac984bf9f2afe1f4eba9443e31899a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerStat: {fileID: 1708018807}
   _hpSlider: {fileID: 235995654}
   _spSlider: {fileID: 35374698}
 --- !u!1001 &1862344064
@@ -3555,6 +3722,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       insertIndex: -1
       addedObject: {fileID: 173980753}
+    - targetCorrespondingSourceObject: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 783530750}
+    - targetCorrespondingSourceObject: {fileID: 4029118476852958, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1142254311}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1280676089565844, guid: 1536126113fa3bc4ca2739312a659e58, type: 3}
       insertIndex: -1
@@ -3687,8 +3860,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1906086421}
   - {fileID: 1862344064}
-  - {fileID: 783530748}
-  - {fileID: 1142254309}
   - {fileID: 1629358655}
   - {fileID: 733411906}
   - {fileID: 449434674}
+  - {fileID: 1007392965}
