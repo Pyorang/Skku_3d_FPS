@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject _explosionEffectPrefab;
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        GameObject effectObject = Instantiate(_explosionEffectPrefab);
+        effectObject.transform.position = transform.position;
+
+        Destroy(gameObject);
     }
 }
