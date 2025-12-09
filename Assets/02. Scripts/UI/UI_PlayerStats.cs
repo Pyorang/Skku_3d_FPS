@@ -12,19 +12,25 @@ public class UI_PlayerStats : MonoBehaviour
     [SerializeField] private Slider _hpSlider;
     [SerializeField] private Slider _spSlider;
 
-    private void Update()
+    private void Awake()
     {
-        _hpSlider.value = _playerStat.Health.Value / _playerStat.Health.MaxValue;
-        _spSlider.value = _playerStat.Stamina.Value / _playerStat.Stamina.MaxValue;
+        _playerStat.Health.OnValueChanged += UpdateHpStatSlider;
+        _playerStat.Stamina.OnValueChanged += UpdateSpStatSlider;
     }
 
-    public void UpdateHpStatSlider(float value)
+    private void OnDestroy()
     {
-        _hpSlider.value = value;
+        _playerStat.Health.OnValueChanged -= UpdateHpStatSlider;
+        _playerStat.Stamina.OnValueChanged -= UpdateSpStatSlider;
     }
 
-    public void UpdateSpStatSlider(float value)
+    private void UpdateHpStatSlider(float value, float maxValue)
     {
-        _spSlider.value = value;
+        _hpSlider.value = value / maxValue;
+    }
+
+    private void UpdateSpStatSlider(float value, float maxValue)
+    {
+        _spSlider.value = value / maxValue;
     }
 }
