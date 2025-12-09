@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public GameObject _explosionEffectPrefab;
+    public GameObject ExplosionEffectPrefab;
 
     private void OnCollisionEnter(Collision collision)
     {
-        GameObject effectObject = Instantiate(_explosionEffectPrefab);
+        GameObject effectObject = Instantiate(ExplosionEffectPrefab);
         effectObject.transform.position = transform.position;
 
         Destroy(gameObject);
