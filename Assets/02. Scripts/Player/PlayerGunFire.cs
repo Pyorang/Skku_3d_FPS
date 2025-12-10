@@ -1,38 +1,49 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 public class PlayerGunFire : MonoBehaviour
 {
-    [Header("총알 설정")]
-    [Space]
-    public ConsumableItem ReloadedAmmo;
-    public ConsumableItem TotalAmmo;
-
-    [Header("총 재장전 설정")]
-    [Space]
-    [SerializeField] private float _reloadingTime = 2f;
     private bool _isReloading = false;
 
     [Header("총 설정")]
     [Space]
-    [SerializeField] private float _shootCoolTime = 0.1f;
+    [SerializeField] private Gun _gun;
     [SerializeField] private Transform _fireTransform;
+
+    private Queue<Magazine> _magazines = new Queue<Magazine>();
+
+    [Header("이펙트 설정")]
+    [Space]
     [SerializeField] private ParticleSystem _hitEffect;
     private float _timeElapsed;
 
-    public static event Action<float, float> OnReloading;
+    public static event Action<float, float> OnReloadingTimeChanged;
+    public static event Action<int, int> OnReloading;
 
     private Camera _mainCamera;
 
     private void Awake()
     {
-        _timeElapsed = _shootCoolTime;
-        ReloadedAmmo.Initialize();
+        _timeElapsed = _gun.ShootCoolTime;
+
+        _gun.Init();
+
+        // NOTE : 테스트 코드
+        for(int i = 0; i < 4; i++)
+        {
+            Magazine magazine = new Magazine();
+            magazine.SetMaxBulletCount(_gun.CurrentBulletCount);
+            magazine.Init();
+            _magazines.Enqueue(magazine);
+        }
     }
 
     private void Start()
     {
         _mainCamera = Camera.main;
+
+        OnReloading?.Invoke(_gun.CurrentBulletCount, GetTotalBullet());
     }
     private void Update()
     {
@@ -53,8 +64,10 @@ public class PlayerGunFire : MonoBehaviour
     }
     private void TryFire()
     {
-        if((_timeElapsed >= _shootCoolTime) && ReloadedAmmo.TryConsume(1))
+        if((_timeElapsed >= _gun.ShootCoolTime) && _gun.Shoot())
         {
+            OnReloading?.Invoke(_gun.CurrentBulletCount, GetTotalBullet());
+
             _timeElapsed = 0f;
             Ray ray = new Ray(_fireTransform.position, _mainCamera.transform.forward);
             RaycastHit hitInfo = new RaycastHit(); // 충돌한 대상의 정보를 저장
@@ -64,27 +77,46 @@ public class PlayerGunFire : MonoBehaviour
 
     private void Reload()
     {
-        _isReloading = true;
-
         StartCoroutine(ReloadingProcess());
     }
 
     private IEnumerator ReloadingProcess()
     {
+        int reloadingCount = _gun.MaxBulletCount - _gun.CurrentBulletCount;
+
+        if(reloadingCount <= 0)
+        {
+            yield break;
+        }
+
+        _isReloading = true;
         float timeElapsed = 0;
         
-        while(timeElapsed < _reloadingTime)
+        while(timeElapsed < _gun.ReloadTime)
         {
-            OnReloading?.Invoke(timeElapsed, _reloadingTime);
+            OnReloadingTimeChanged?.Invoke(timeElapsed, _gun.ReloadTime);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
 
-        int reloadingBulletCount = Mathf.Min(ReloadedAmmo.MaxValue - ReloadedAmmo.Value, TotalAmmo.Value);
-        if (TotalAmmo.TryConsume(reloadingBulletCount))
+        _gun.Reload(Mathf.Min(reloadingCount, GetTotalBullet()));
+
+        while ((reloadingCount > 0) && (GetTotalBullet() > 0))
         {
-            ReloadedAmmo.Increase(reloadingBulletCount);
+            Magazine recentUsedMagazine = _magazines.Peek();
+
+            int getBulletCount = Mathf.Min(reloadingCount, recentUsedMagazine.CurrentBulletCount);
+            recentUsedMagazine.TryConsume(getBulletCount);
+
+            reloadingCount -= getBulletCount;
+
+            if(recentUsedMagazine.CurrentBulletCount == 0)
+            {
+                _magazines.Dequeue();
+            }
         }
+
+        OnReloading?.Invoke(_gun.CurrentBulletCount, GetTotalBullet());
 
         _isReloading = false;
     }
@@ -114,4 +146,16 @@ public class PlayerGunFire : MonoBehaviour
     // Ray: 레이저 (시작 위치, 방향, 거리)
     // hitInfo: 충돌한 대상의 정보 저장
     // RaycastHit: 충돌한 대상의 정보 저장
+
+    public int GetTotalBullet()
+    {
+        int totalBulelt = 0;
+
+        foreach(var magaizne in _magazines)
+        {
+            totalBulelt += magaizne.CurrentBulletCount;
+        }
+
+        return totalBulelt;
+    }
 }
