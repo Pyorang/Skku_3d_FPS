@@ -5,10 +5,21 @@ using UnityEngine;
 public class ConsumableItem
 {
     [SerializeField] private int _maxValue;
-    private int _value;
+    [SerializeField] private int _value;
 
-    public float Value => _value;
-    public float MaxValue => _maxValue;
+    public int Value
+    {
+        get { return _value; }
+        private set
+        {
+            if (Mathf.Approximately(_value, value)) return;
+            _value = value;
+            OnValueChanged?.Invoke();
+        }
+    }
+    public int MaxValue => _maxValue;
+
+    public event Action OnValueChanged;
 
     public void Initialize()
     {
@@ -17,7 +28,7 @@ public class ConsumableItem
 
     public bool TryConsume(int amount)
     {
-        if (_value < amount) return false;
+        if (Value < amount) return false;
 
         Consume(amount);
 
@@ -26,7 +37,7 @@ public class ConsumableItem
 
     public void Consume(int amount)
     {
-        _value -= amount;
+        Value -= amount;
     }
 
     public void IncreaseMax(int amount)
@@ -36,7 +47,7 @@ public class ConsumableItem
 
     public void Increase(int amount)
     {
-        SetValue(_value + amount);
+        SetValue(Value + amount);
     }
 
     public void DecreaseMax(int amount)
@@ -45,7 +56,7 @@ public class ConsumableItem
     }
     public void Decrease(int amount)
     {
-        _value -= amount;
+        Value -= amount;
     }
 
     public void SetMaxValue(int value)
@@ -54,11 +65,11 @@ public class ConsumableItem
     }
     public void SetValue(int value)
     {
-        _value = value;
+        Value = value;
 
-        if (_value > _maxValue)
+        if (Value > _maxValue)
         {
-            _value = _maxValue;
+            Value = _maxValue;
         }
     }
 }
