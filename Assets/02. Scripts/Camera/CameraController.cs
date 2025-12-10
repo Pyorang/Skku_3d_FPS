@@ -2,8 +2,11 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
+    private static CameraController s_CameraController;
+    public static CameraController Instance => s_CameraController;
+
     [Header("카메라 뷰")]
     [Space]
     [SerializeField] private Transform _fpsView;
@@ -13,6 +16,7 @@ public class CameraFollow : MonoBehaviour
     [Header("카메라 이동 설정")]
     [Space]
     [SerializeField] private float _duration = 1.0f;
+
     private Vector3 _startPos;
 
     private bool _isFPS = false;
@@ -31,6 +35,15 @@ public class CameraFollow : MonoBehaviour
     private void Awake()
     {
         IsFPS = true;
+
+        if(s_CameraController == null)
+        {
+            s_CameraController = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -50,11 +63,11 @@ public class CameraFollow : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T) && !_isMoving)
         {
+            _startPos = _isFPS ? _fpsView.position : _tpsView.position;
+            
             IsFPS = !IsFPS;
 
             _isMoving = true;
-
-            _startPos = transform.position;
 
             DOVirtual.Float(0f, 1f, _duration, UpdateTweenByParam)
             .SetEase(Ease.OutQuad)

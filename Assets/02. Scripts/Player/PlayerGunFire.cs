@@ -91,6 +91,8 @@ public class PlayerGunFire : MonoBehaviour
 
     private void Fire(Ray ray, RaycastHit hitInfo)
     {
+        CameraRotate.Instance.GiveRebound(new Vector2(0, 2));
+
         bool isHit = Physics.Raycast(ray, out hitInfo);
         if (isHit == true)
         {
