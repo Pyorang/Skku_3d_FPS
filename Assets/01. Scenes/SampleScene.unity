@@ -3051,7 +3051,7 @@ MonoBehaviour:
     _maxValue: 999
     _value: 150
   _reloadingTime: 1.6
-  _shootCoolTime: 0.4
+  _shootCoolTime: 0.1
   _fireTransform: {fileID: 1186565789}
   _hitEffect: {fileID: 716916923}
 --- !u!1 &1714812455
