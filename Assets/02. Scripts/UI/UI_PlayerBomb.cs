@@ -5,7 +5,7 @@ public class UI_PlayerBomb : MonoBehaviour
 {
     [Header("플레이어 발사 컴포넌트")]
     [Space]
-    [SerializeField] private PlayerFire _playerFire;
+    [SerializeField] private PlayerBombFire _playerFire;
 
     [Header("폭탄 텍스트")]
     [Space]

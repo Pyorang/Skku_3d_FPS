@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerFire : MonoBehaviour
+public class PlayerBombFire : MonoBehaviour
 {
     [Header("폭탄 설정")]
     [Space]
