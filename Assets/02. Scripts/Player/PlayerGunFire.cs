@@ -138,8 +138,8 @@ public class PlayerGunFire : MonoBehaviour
 
             if (monster != null)
             {
-                monster.TryTakeDamage(_gun.Damage);
                 monster.ApplyKnockBack(transform.forward);
+                monster.TryTakeDamage(_gun.Damage);
             }
         }
     }

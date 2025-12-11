@@ -11,7 +11,14 @@ public class Bomb : MonoBehaviour
     [Space]
     [SerializeField] private float _damage = 20;
 
+    private Rigidbody _rigidbody;
+
     private IObjectPool<Bomb> _managedPool;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     public void SetManagedPool(IObjectPool<Bomb> managedPool)
     {
@@ -34,6 +41,7 @@ public class Bomb : MonoBehaviour
 
     public void DestroyBomb()
     {
+        _rigidbody.linearVelocity = Vector3.zero;
         _managedPool.Release(this);
     }
 }

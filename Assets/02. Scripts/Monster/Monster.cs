@@ -13,9 +13,13 @@ public class Monster : MonoBehaviour
             {
                 _state = value;
 
+                if (value == EMonsterState.Idle)
+                {
+                    Idle();
+                }
                 if (value == EMonsterState.Attack)
                 {
-                    AttackTimer = AttackSpeed;
+                    AttackTimer = 0;
                 }
                 if (value == EMonsterState.Patrol)
                 {
@@ -200,7 +204,10 @@ public class Monster : MonoBehaviour
 
     public void ApplyKnockBack(Vector3 direction)
     {
-        _characterController.Move(direction.normalized * _knockbackPower);
+        if(!IsInvincible())
+        {
+            _characterController.Move(direction.normalized * _knockbackPower);
+        }
     }
 
     private IEnumerator Idle_Coroutine()
