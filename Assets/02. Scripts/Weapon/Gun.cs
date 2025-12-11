@@ -7,9 +7,11 @@ public class Gun
 {
     [Header("총 데이터 설정")]
     [Space]
+    [SerializeField] private float _damage;
     [SerializeField] private float _reloadTime;
     [SerializeField] private float _shootCoolTime;
 
+    public float Damage => _damage;
     public float ReloadTime => _reloadTime;
     public float ShootCoolTime=> _shootCoolTime;
 
