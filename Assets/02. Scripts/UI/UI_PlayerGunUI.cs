@@ -18,26 +18,18 @@ public class UI_PlayerGunUI : MonoBehaviour
 
     private void Awake()
     {
-        _gunFire.ReloadedAmmo.OnValueChanged += UpdateGunUI;
-        _gunFire.TotalAmmo.OnValueChanged += UpdateGunUI;
-        PlayerGunFire.OnReloading += UpdateReloadingUI;
+        PlayerGunFire.OnReloading += UpdateGunUI;
+        PlayerGunFire.OnReloadingTimeChanged += UpdateReloadingUI;
     }
-
-    private void Start()
-    {
-        UpdateGunUI();
-    }
-
     private void OnDestroy()
     {
-        _gunFire.ReloadedAmmo.OnValueChanged -= UpdateGunUI;
-        _gunFire.TotalAmmo.OnValueChanged -= UpdateGunUI;
-        PlayerGunFire.OnReloading -= UpdateReloadingUI;
+        PlayerGunFire.OnReloading -= UpdateGunUI;
+        PlayerGunFire.OnReloadingTimeChanged -= UpdateReloadingUI;
     }
 
-    private void UpdateGunUI()
+    private void UpdateGunUI(int value, int maxValue)
     {
-        _gunUIText.text = $"{_gunFire.ReloadedAmmo.Value} / {_gunFire.TotalAmmo.Value}";
+        _gunUIText.text = $"{value} / {maxValue}";
     }
 
     private void UpdateReloadingUI(float value, float maxValue)
