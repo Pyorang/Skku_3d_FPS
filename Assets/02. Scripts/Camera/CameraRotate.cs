@@ -42,6 +42,7 @@ public class CameraRotate : MonoBehaviour
 
         // 4. 누적한 회전 방향으로 카메라 회전하기
         transform.eulerAngles = new Vector3(-_accumulationY, _accumulationX);
+
     }
 
     public void GiveRebound(Vector2 angle)

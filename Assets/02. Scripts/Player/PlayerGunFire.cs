@@ -96,37 +96,22 @@ public class PlayerGunFire : MonoBehaviour
         bool isHit = Physics.Raycast(ray, out hitInfo);
         if (isHit == true)
         {
+            // 1. Instantiate 방식 (+ 풀링) -> 새로 생성
+            // 2. 하나를 캐싱해두고 Play    -> 단점 : 재실행이므로 기존 것이 삭제
+            // 3. 하나를 캐싱해두고 Emit
+
             Debug.Log($"Hit : {hitInfo.transform.name}");
             _hitEffect.transform.position = hitInfo.point;
             _hitEffect.transform.forward = hitInfo.normal;
 
+            /*ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
+            emitParams.position = hitInfo.point;
+            emitParams.rotation3D = Quaternion.LookRotation(hitInfo.normal).eulerAngles;*/
+
             _hitEffect.Play();
-
-            Monster monster = hitInfo.collider.gameObject.GetComponent<Monster>();
-
-            if (monster != null)
-            {
-                monster.TryTakeDamage(_gun.Damage);
-                monster.ApplyKnockBack(transform.forward);
-            }
         }
     }
-<<<<<<< Updated upstream
     // Ray: 레이저 (시작 위치, 방향, 거리)
     // hitInfo: 충돌한 대상의 정보 저장
     // RaycastHit: 충돌한 대상의 정보 저장
-=======
-
-    public int GetTotalBullet()
-    {
-        int totalBulelt = 0;
-
-        foreach(var magaizne in _magazines)
-        {
-            totalBulelt += magaizne.CurrentBulletCount;
-        }
-
-        return totalBulelt;
-    }
->>>>>>> Stashed changes
 }
