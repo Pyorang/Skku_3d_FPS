@@ -18,9 +18,11 @@ public class PlayerMove : MonoBehaviour
 
     private CharacterController _controller;
     private PlayerStat _playerStat;
+    private Animator _animator;
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
         _playerStat = GetComponent<PlayerStat>();
     }
@@ -36,17 +38,30 @@ public class PlayerMove : MonoBehaviour
         Vector3 direction = new Vector3(x, 0, y);
         direction.Normalize();
 
+        if(direction.magnitude > 0 )
+        {
+            _animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            _animator.SetBool("isMoving", false);
+        }
+
         ApplyJump();
 
         direction = Camera.main.transform.TransformDirection(direction);
 
         if (Input.GetKey(KeyCode.LeftShift) && (_playerStat.Stamina.TryConsume(_runStaminaUse * Time.deltaTime)))
         {
+            _animator.SetBool("isRunning", true);
             direction *= _playerStat.RunSpeed.Value;
+        }
+        else
+        {
+            _animator.SetBool("isRunning", false);
         }
 
         direction.y = _yVeloctiy;
-
         _controller.Move(direction * _playerStat.MoveSpeed.Value * Time.deltaTime);
     }
 
@@ -55,6 +70,11 @@ public class PlayerMove : MonoBehaviour
         if(_controller.isGrounded)
         {
             _secondJump = false;
+            _animator.SetBool("isGrounded", true);
+        }
+        else
+        {
+            _animator.SetBool("isGrounded", false);
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -72,6 +92,7 @@ public class PlayerMove : MonoBehaviour
                 }
             }
 
+            _animator.SetTrigger("jump");
             _yVeloctiy = _playerStat.JumpPower.Value;
         }
     }
