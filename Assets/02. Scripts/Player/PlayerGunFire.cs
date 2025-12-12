@@ -141,6 +141,13 @@ public class PlayerGunFire : MonoBehaviour
                 monster.ApplyKnockBack(transform.forward);
                 monster.TryTakeDamage(_gun.Damage);
             }
+
+            Drum drum = hitInfo.collider.gameObject.GetComponent<Drum>();
+
+            if (drum != null)
+            {
+                drum.TryTakeDamage(10);
+            }
         }
     }
 
