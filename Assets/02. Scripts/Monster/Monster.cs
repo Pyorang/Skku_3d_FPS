@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public EMonsterState _state = EMonsterState.Idle;
+    /*public EMonsterState _state = EMonsterState.Idle;
     public EMonsterState State
     {
         get { return _state; }
@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     [SerializeField] private GameObject _player;
     [SerializeField] private CharacterController _characterController;
@@ -59,7 +59,7 @@ public class Monster : MonoBehaviour
     public Vector3 nextPosition;
 
 
-    private void Awake()
+    /*private void Awake()
     {
         _startLocation = transform.position;
         AttackTimer = AttackSpeed;
@@ -227,5 +227,5 @@ public class Monster : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
-    }
+    }*/
 }

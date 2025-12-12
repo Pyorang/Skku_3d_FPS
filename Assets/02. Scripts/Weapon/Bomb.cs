@@ -33,7 +33,7 @@ public class Bomb : MonoBehaviour
         Monster monster = collision.gameObject.GetComponent<Monster>();
         if(monster != null)
         {
-            monster.TryTakeDamage(_damage);
+            //monster.TryTakeDamage(_damage);
         }
 
         DestroyBomb();
