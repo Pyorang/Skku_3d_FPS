@@ -11,6 +11,14 @@ public class Bomb : MonoBehaviour
     [Space]
     [SerializeField] private float _damage = 20;
 
+    [Header("폭탄 범위 설정")]
+    [Space]
+    [SerializeField] private float _explosionRadius = 2;
+
+    [Header("대상 레이어 설정")]
+    [Space]
+    [SerializeField] private LayerMask _monsterLayer;
+
     private Rigidbody _rigidbody;
 
     private IObjectPool<Bomb> _managedPool;
@@ -30,11 +38,25 @@ public class Bomb : MonoBehaviour
         GameObject effectObject = Instantiate(ExplosionEffectPrefab);
         effectObject.transform.position = transform.position;
 
-        Monster monster = collision.gameObject.GetComponent<Monster>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _explosionRadius, _monsterLayer);
+
+        for(int i = 0; i < colliders.Length; i++)
+        {
+            Monster monster = colliders[i].gameObject.AddComponent<Monster>();
+
+            float distance = Vector3.Distance(transform.position, monster.transform.position);
+            distance = Mathf.Min(1f, distance);
+
+            float fianlDamage = _damage / distance;
+
+            monster.TryTakeDamage(fianlDamage);
+        }
+
+        /*Monster monster = collision.gameObject.GetComponent<Monster>();
         if(monster != null)
         {
             monster.TryTakeDamage(_damage);
-        }
+        }*/
 
         DestroyBomb();
     }

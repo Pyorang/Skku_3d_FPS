@@ -150,3 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExplosionEffectPrefab: {fileID: 1007127540951276732, guid: 3ace37360f306cb4aac03640550fa9ef, type: 3}
+  _damage: 30
+  _explosionRadius: 2
+  _monsterLayer:
+    serializedVersion: 2
+    m_Bits: 128
